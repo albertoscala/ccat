@@ -4,6 +4,7 @@ use std::io::{BufRead, BufReader};
 use std::path::Path;
 use std::path::PathBuf;
 use std::error::Error;
+use unicode_width::UnicodeWidthStr;
 
 fn read_file(path: &Path) -> Result<String, Box<dyn Error>> {
     let mut content: String = String::from("");
@@ -52,7 +53,7 @@ fn parse_csv(content: String) -> Vec<Vec<String>> {
         let mut intermediate_parsing: Vec<String> = line.split(",").map(|x| {String::from(x.trim())}).collect();
 
         if intermediate_parsing.len() < n_fields {
-            for i in 0..(n_fields-intermediate_parsing.len()+1) {
+            for _ in 0..(n_fields-intermediate_parsing.len()+1) {
                 intermediate_parsing.push(String::from(" "));
             }
         }
@@ -70,7 +71,7 @@ fn maxlen_column(table: &Vec<Vec<String>>, col: usize) -> usize {
     let mut max = 0;
     for row in table {
         if let Some(cell) = row.get(col) {
-            max = max.max(cell.len());
+            max = max.max(cell.width());
         }
     }
     max + 2
@@ -83,8 +84,6 @@ fn print_csv(table: &Vec<Vec<String>>) {
     for i in 0..table[0].len() {
         columns_len.push(maxlen_column(table, i));
     }
-
-    println!("Len tot: {val}. Tot col: {val2}", val=columns_len.iter().sum::<usize>(), val2=columns_len.len());
 
     // TOP
     print!("┌");
@@ -100,7 +99,7 @@ fn print_csv(table: &Vec<Vec<String>>) {
     for i in 0..table.len() {
         for j in 0..table[0].len() {
             print!("│{val}", val=table[i][j]);
-            print!("{val}", val=" ".repeat(columns_len[j] - table[i][j].len()))
+            print!("{val}", val=" ".repeat(columns_len[j] - table[i][j].width()))
         }
         println!("│");  
         
@@ -149,7 +148,8 @@ fn main() {
         let table = parse_csv(file);
 
         print_csv(&table);
-    }
 
+        println!("Rows: {rows}, Cols: {cols}", rows=table.len(), cols=table[0].len());
+    }
 
 }

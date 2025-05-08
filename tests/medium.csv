@@ -1,0 +1,21 @@
+ID,Name,Age,Department,Salary,Full-Time,Hire Date,Email,Notes
+1,Alice Smith,30,Engineering,85000,true,2016-08-15,alice.smith@example.com,
+2,Bob Johnson,45,Sales,,false,2012-03-01,bob.j@example.org,"Long-term client contact"
+3,Charlie,29,Product,79000,true,2019-11-22,,Missing email
+4,Diana Mendez,,HR,67000,true,2018-04-30,diana.m@hrcorp.com,"On parental leave"
+5,Evan,Late thirties,Support,54000,false,2020-06-10,evan.support@company.com,
+6,Fatima Noor,38,Engineering,91000,true,2015-01-09,fatima@eng.io,"Remote worker"
+7,,28,Marketing,60000,true,2021-02-18,,New hire
+8,Hans Müller,41,R&D,99000,true,2010-10-01,hans.m@randd.eu,
+9,Isabel Lee,33,Finance,72000,false,2017-09-14,isabel.lee@fintech.com,"Part-time contractor"
+10,Jin Park,31,Design,,"yes",2022-01-01,jin.park@design.co,
+11,Kofi Mensah,35,Engineering,88000,true,,kofi@eng.io,"Has dietary restrictions"
+12,Léa Dupont,39,HR,70000,true,2016-05-27,lea@hrcorp.com,"Speaks French"
+13,María López,27,Legal,76000,true,2021-08-12,maria@legal.mx,"New bar license"
+14,Nikolai,50,R&D,104000,false,2005-12-20,nikolai@oldtimer.com,"Senior expert"
+15,Ola Nordmann,,Support,59000,false,2019-03-03,,Moved departments
+16,Quinn,24,Engineering,73000,true,2023-03-20,quinn@eng.io,
+17,Ravi Patel,29,Sales,65000,true,2018-10-05,ravi.sales@example.com,"Performance flagged"
+18,Sara Svensson,32,Marketing,,true,2020-07-15,sara@marketing.io,
+19,Tomáš Novák,37,Engineering,87000,true,2014-02-28,tom@eng.io,"Prefers metric units"
+20,Yuki Yamamoto,43,Management,115000,true,2011-11-11,yuki@hq.jp,"Exec board member"

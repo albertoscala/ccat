@@ -1,0 +1,51 @@
+ID,Name,Age,Department,Salary,Bonus,Active,Start Date,Email,Phone,Manager,Notes
+1,Alice Smith,30,Engineering,85000,5000,true,2016-08-15,alice@example.com,555-1234,John Doe,Team Lead
+2,Bob Johnson,45,Sales,,,false,2012-03-01,bob@corp.org,,Jane Roe,
+3,Charlie Zhang,29,Product,79000,,true,2019-11-22,,,,"Works remotely"
+4,Diana Mendez,,HR,67000,2500,true,2018-04-30,diana@hr.com,,,
+5,Evan Brooks,38,Support,54000,,false,2020-06-10,,555-6789,John Doe,"Part-time"
+6,Fatima Noor,38,Engineering,91000,5200,true,2015-01-09,fatima@eng.io,555-9999,,
+7,,28,Marketing,60000,3000,true,2021-02-18,,,New hire
+8,Hans Müller,41,R&D,99000,,true,2010-10-01,hans@randd.eu,,Dr. Franz,"Long-term employee"
+9,Isabel Lee,33,Finance,72000,3500,false,2017-09-14,isabel@fintech.com,555-4321,,Remote
+10,Jin Park,31,Design,,,,2022-01-01,jin@design.co,,,
+11,Kofi Mensah,35,Engineering,88000,4400,true,,kofi@eng.io,555-2020,John Doe,
+12,Léa Dupont,39,HR,70000,3000,true,2016-05-27,lea@hrcorp.com,,,
+13,María López,27,Legal,76000,3700,true,2021-08-12,maria@legal.mx,555-3030,,
+14,Nikolai,50,R&D,104000,6000,false,2005-12-20,nik@lab.com,,,
+15,Ola Nordmann,,Support,59000,,false,2019-03-03,,,Moved departments
+16,Quinn Lee,24,Engineering,73000,4100,true,2023-03-20,quinn@eng.io,,,
+17,Ravi Patel,29,Sales,65000,2800,true,2018-10-05,ravi@sales.com,,,"Flagged for review"
+18,Sara Svensson,32,Marketing,,,true,2020-07-15,sara@mk.io,,,
+19,Tomáš Novák,37,Engineering,87000,4200,true,2014-02-28,tom@eng.io,,Prefers metric
+20,Yuki Yamamoto,43,Management,115000,8000,true,2011-11-11,yuki@hq.jp,,Exec
+21,Anne-Marie,34,Legal,81000,3200,true,2017-01-25,am@law.org,,,
+22,Bruno Silva,39,Support,61000,2000,false,2019-05-10,,,
+23,Céline Dion,49,Design,99000,5400,true,2010-09-14,celine@design.io,,,
+24,Derek Lin,28,Engineering,83000,4800,true,2022-02-01,derek@eng.io,,,
+25,Eva Chen,36,Product,79000,3600,true,2016-10-20,eva@prod.com,,,
+26,Freddy Wong,40,Sales,72000,,false,2015-04-04,,,
+27,Greta Thunberg,20,Environmental,52000,1500,true,2023-01-01,greta@env.org,,,"Climate specialist"
+28,Henry Ford,55,Manufacturing,98000,7000,false,2000-03-20,,,
+29,Ivana Humpalot,30,HR,68000,2800,true,2019-11-09,,,
+30,José Silva,31,Support,60000,,true,2020-01-17,jose@help.org,,,
+31,Karen O’Neill,29,Finance,73000,3400,true,2021-06-01,karen@fin.com,,,
+32,Luigi Verdi,38,Logistics,69000,2900,false,2018-12-12,,,
+33,Maria Garcia,44,Legal,88000,5000,true,2013-03-18,maria.g@law.com,,,
+34,Niels Bohr,47,R&D,105000,6200,true,2008-07-22,niels@quantum.io,,,
+35,Ophelia,27,Product,75000,,true,2022-05-10,,,
+36,Peter Parker,26,Support,61000,2600,true,2020-08-15,spiderman@hero.com,,,
+37,Queen Latifah,52,Marketing,94000,5700,true,2006-02-25,queen@stars.org,,,
+38,Rajesh Koothrappali,33,Engineering,87000,4300,true,2016-06-06,raj@caltech.edu,,,
+39,Stella,31,HR,71000,,false,2019-04-04,,,
+40,Tim Cook,62,Management,200000,12000,true,1998-11-15,ceo@apple.com,,Exec board
+41,Ursula von D.,49,Politics,120000,9000,true,2010-01-01,ursula@eu.eu,,,
+42,Vikram Patel,36,Engineering,86000,4100,true,2017-10-30,vik@eng.io,,,
+43,Wendy Wu,29,Design,79000,3500,true,2021-04-04,wendy@design.co,,,
+44,Xiao Li,40,Logistics,71000,3100,true,2018-09-09,xiao@log.com,,,
+45,Yana Petrova,32,Sales,69000,2800,false,2019-07-21,yana@sales.net,,,
+46,Zahra Khan,27,Finance,72000,3000,true,2023-02-02,zahra@finance.org,,,
+47,Alejandro G.,50,Legal,88000,5200,true,2010-06-30,ale@law.com,,,
+48,Bella Swan,24,Support,59000,2500,true,2022-11-11,bella@twilight.net,,,
+49,Connor Kent,26,Engineering,84000,4700,true,2022-08-08,connor@dailyplanet.com,,,
+50,Daria Morgendorffer,35,Marketing,73000,3400,false,2017-02-17,daria@fashion.edu,,,
