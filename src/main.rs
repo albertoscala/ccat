@@ -1,131 +1,125 @@
-use std::env;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::{env, fs};
 use std::path::Path;
 use std::path::PathBuf;
 use std::error::Error;
 use unicode_width::UnicodeWidthStr;
 
 fn read_file(path: &Path) -> Result<String, Box<dyn Error>> {
-    let mut content: String = String::from("");
-
-    let file = match File::open(path) {
-        Ok(file) => file,
+    match fs::read_to_string(path) {
+        Ok(content) => Ok(content),
         Err(e) => {
-            eprintln!("Error while opening file {file_name}: {e}", file_name=path.display());
-            return Err(Box::new(e));
+            eprintln!("Error reading file {}: {}", path.display(), e);
+            Err(Box::new(e))
         }
+    }
+}
+
+fn parse_csv(content: String, sep: &str) -> Vec<Vec<String>> {
+    let mut table: Vec<Vec<String>> = Vec::new();
+
+    // Split content line by line
+    let mut lines = content.lines();
+
+    // Get all the column
+    let header: Vec<String> = match lines.next() {
+        Some(line) => line.split(sep).map(|value| value.trim().to_string()).collect(),
+        None => return table
     };
-
-    let reader = BufReader::new(file);
-
-    for line in reader.lines() {
-        let line = match line {
-            Ok(line) => line + "\n",
-            Err(e) => {
-                eprintln!("Error while reading file {file_name}: {e}", file_name=path.display());
-                return Err(Box::new(e));
-            }
-        };
-
-        content.push_str(line.as_str());
-    }
-
-    Ok(content)
-
-}
-
-fn parse_csv(content: String) -> Vec<Vec<String>> {
-    let mut parsed: Vec<Vec<String>> = Vec::new();
-
-    let lines: Vec<String> = content.split("\n").map(|x| {String::from(x)}).collect();
-
-    let fields: Vec<String> = lines[0].split(",").map(|x| {String::from(x.trim())}).collect();
     
-    let n_fields = fields.len();
+    // Get the total number of columns
+    let n_fields = header.len();
+    table.push(header);
 
-    parsed.push(
-        fields
-    );
+    for line in lines {
+        // Split line on
+        let mut row: Vec<String> = line.split(",")
+                                        .map(|value| value.trim().to_string())
+                                        .collect();
 
-    for line in &lines[1..lines.len()-1] {
-        
-        let mut intermediate_parsing: Vec<String> = line.split(",").map(|x| {String::from(x.trim())}).collect();
-
-        if intermediate_parsing.len() < n_fields {
-            for _ in 0..(n_fields-intermediate_parsing.len()+1) {
-                intermediate_parsing.push(String::from(" "));
-            }
+        // Add value padding
+        while row.len() < n_fields {
+            row.push(" ".to_string());
         }
 
-        parsed.push(
-            intermediate_parsing
-        );
+        table.push(row);
 
     }
     
-    parsed
+    table
 }
 
-fn maxlen_column(table: &Vec<Vec<String>>, col: usize) -> usize {
+fn column_size(table: &Vec<Vec<String>>, col: usize) -> usize {
     let mut max = 0;
     for row in table {
         if let Some(cell) = row.get(col) {
             max = max.max(cell.width());
         }
     }
+
     max + 2
 }
 
-fn print_csv(table: &Vec<Vec<String>>) {
-
-    let mut columns_len: Vec<usize> = Vec::new();
+fn column_sizes(table: &Vec<Vec<String>>) -> Vec<usize> {
+    let mut column_sizes: Vec<usize> = Vec::new();
 
     for i in 0..table[0].len() {
-        columns_len.push(maxlen_column(table, i));
+        column_sizes.push(column_size(table, i));
     }
 
-    // TOP
-    print!("┌");
-    for i in 0..columns_len.len() {
-        print!("{val}", val="─".repeat(columns_len[i]));
-        if i != columns_len.len()-1 {
-            print!("┬");
+    column_sizes
+}
+
+fn print_line(column_sizes: &Vec<usize>, start: &str, mid: &str, end: &str) {
+    // Beginning of the line
+    print!("{start}");
+
+    // Line logic
+    for i in 0..column_sizes.len() {
+        print!("{val}", val="─".repeat(column_sizes[i]));
+        if i != column_sizes.len()-1 {
+            print!("{mid}");
         }
     }
-    println!("┐");
+
+    // End of the line
+    println!("{end}");
+}
+
+fn print_row(table: &Vec<Vec<String>>, row: usize, column_sizes: &Vec<usize>) {
+    for col in 0..table[0].len() {
+        print!("│{val}", val=table[row][col]);
+        print!("{val}", val=" ".repeat({
+            // Return padding to fill the cell
+            column_sizes[col] - table[row][col].width()
+        }))
+    }
+    println!("│");
+}
+
+fn print_table(table: &Vec<Vec<String>>) {
+    // Get the sizes of all the columns
+    let column_sizes = column_sizes(table);
+
+    // TOP
+    print_line(&column_sizes, "┌", "┬", "┐");
 
     // MIDDLE
     for i in 0..table.len() {
-        for j in 0..table[0].len() {
-            print!("│{val}", val=table[i][j]);
-            print!("{val}", val=" ".repeat(columns_len[j] - table[i][j].width()))
-        }
-        println!("│");  
+        // Print value row
+        print_row(table, i, &column_sizes);  
         
-        // UNDER VALUES
+        // Print separator line
         if i != table.len()-1 {
-            print!("├");
-            for i in 0..columns_len.len() {
-                print!("{val}", val="─".repeat(columns_len[i]));
-                if i != columns_len.len()-1 {
-                    print!("┼");
-                }
-            }
-            println!("┤");
+            print_line(&column_sizes, "├", "┼", "┤");
         }
 
     }
 
     // BOTTOM
-    print!("└");
-    for i in 0..columns_len.len() {
-        print!("{val}", val="─".repeat(columns_len[i]));
-        if i != columns_len.len()-1 {
-            print!("┴");
-        }
-    }
-    println!("┘");
+    print_line(&column_sizes, "└", "┴", "┘");
+
+    // Print table size
+    println!("Rows: {rows}, Cols: {cols}", rows=table.len(), cols=table[0].len());
 
 }
 
@@ -133,23 +127,28 @@ fn main() {
     // Collecting files name from cmd
     let args: Vec<String> = env::args().collect();
 
-    let paths: Vec<PathBuf> = args.iter().filter(|x| {x.ends_with(".csv")}).map(|x| {PathBuf::from(x)}).collect();
+    // Turning Strings in PathBufs
+    let paths: Vec<PathBuf> = args.iter()
+                                    .filter(|x| {x.ends_with(".csv")})
+                                    .map(|x| {PathBuf::from(x)})
+                                    .collect();
 
-    // Read CSVs line by line
-    let mut files: Vec<String> = Vec::new();
+    // For each file
     for path in paths {
-        match read_file(path.as_path()) {
-            Ok(content) => files.push(content),
-            Err(e) => eprintln!("Error occured while working with the files: {e}")
+        // Read the content of the file
+        let content = match read_file(path.as_path()) {
+            Ok(content) => content,
+            Err(e) => {
+                eprintln!("Error occured while working with the files: {e}");
+                continue;
+            }
         };
-    }
-    
-    for file in files {
-        let table = parse_csv(file);
 
-        print_csv(&table);
+        // Parse the content
+        let table = parse_csv(content, ",");
 
-        println!("Rows: {rows}, Cols: {cols}", rows=table.len(), cols=table[0].len());
+        // Print the content
+        print_table(&table);
     }
 
 }
